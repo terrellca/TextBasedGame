@@ -10,6 +10,7 @@ public class Game
     ChoiceHandler cHandler = new ChoiceHandler();
 
     UI ui = new UI();
+    VisibilityManager vm = new VisibilityManager(ui);
 
         public static void main(String[] args)
         {
@@ -18,7 +19,8 @@ public class Game
 
         public Game()
         {
-            ui.createUI(cHandler);
+            ui.createUI(cHandler); //Calls method to create UI
+            vm.showTitleScreen(); //Displays Title.
         }
         public class ChoiceHandler implements ActionListener
         {
@@ -29,7 +31,7 @@ public class Game
                 switch(yourChoice)
                 {
                     case "start":
-                    break;
+                    vm.showGameScreen();
                     case "c1":
                     break;
                     

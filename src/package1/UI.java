@@ -50,8 +50,8 @@ public class UI
         startButtonPanel.setBounds(300, 400,200,100);
         startButtonPanel.setBackground(Color.black);
         startButton = new JButton("START");
-        startButton.setBackground(Color.black);
-        startButton.setForeground(Color.white);
+        startButton.setBackground(Color.white);
+        startButton.setForeground(Color.black);
         startButton.setFont(normalFont);
         startButton.setFocusPainted(false);
 
@@ -94,8 +94,8 @@ public class UI
         window.add(choiceButtonpanel);
 
         choice1 = new JButton("choice1");
-        choice1.setBackground(Color.black);
-        choice1.setForeground(Color.white);
+        choice1.setBackground(Color.white);
+        choice1.setForeground(Color.black);
         choice1.setFont(normalFont);
         choice1.setFocusPainted(false);
 
@@ -105,8 +105,8 @@ public class UI
         choiceButtonpanel.add(choice1);
 
         choice2 = new JButton("choice1");
-        choice2.setBackground(Color.black);
-        choice2.setForeground(Color.white);
+        choice2.setBackground(Color.white);
+        choice2.setForeground(Color.black);
         choice2.setFont(normalFont);
         choice2.setFocusPainted(false);
 
@@ -116,8 +116,8 @@ public class UI
         choiceButtonpanel.add(choice2);
 
         choice3 = new JButton("choice1");
-        choice3.setBackground(Color.black);
-        choice3.setForeground(Color.white);
+        choice3.setBackground(Color.white);
+        choice3.setForeground(Color.black);
         choice3.setFont(normalFont);
         choice3.setFocusPainted(false);
 
@@ -127,8 +127,8 @@ public class UI
         choiceButtonpanel.add(choice3);
 
         choice4 = new JButton("choice1");
-        choice4.setBackground(Color.black);
-        choice4.setForeground(Color.white);
+        choice4.setBackground(Color.white);
+        choice4.setForeground(Color.black);
         choice4.setFont(normalFont);
         choice4.setFocusPainted(false);
 
@@ -145,7 +145,7 @@ public class UI
         window.add(playerPanel);
 
 
-        hpTagLabel = new JLabel("HP");
+        hpTagLabel = new JLabel("HP:");
         hpTagLabel.setFont(normalFont);
         hpTagLabel.setForeground(Color.white);
         playerPanel.add(hpTagLabel);
@@ -153,7 +153,7 @@ public class UI
         hpNumLabel.setForeground(Color.white);
         hpNumLabel.setFont(normalFont);
         playerPanel.add(hpNumLabel);
-        weaponLabel = new JLabel("Weapon");
+        weaponLabel = new JLabel("Weapon:");
         weaponLabel .setForeground(Color.white);
         weaponLabel.setFont(normalFont);
         playerPanel.add(weaponLabel);
