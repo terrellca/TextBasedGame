@@ -25,7 +25,7 @@ public class UI
     JButton startButton, choice1, choice2, choice3, choice4;
     JTextArea mainTextArea;
 
-    Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
+    Font titleFont = new Font("Bell MT", Font.PLAIN, 90);
     Font normalFont = new Font("Times New Roman", Font.PLAIN, 26);
     
     public void createUI(ChoiceHandler cHandler)
