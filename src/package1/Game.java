@@ -11,7 +11,10 @@ public class Game
 
     UI ui = new UI();
     VisibilityManager vm = new VisibilityManager(ui);
+    Story story = new Story(this, ui, vm);
 
+
+    
         public static void main(String[] args)
         {
             new Game();
@@ -20,8 +23,11 @@ public class Game
         public Game()
         {
             ui.createUI(cHandler); //Calls method to create UI
+            story.defaultSetUp();
             vm.showTitleScreen(); //Displays Title.
         }
+
+
         public class ChoiceHandler implements ActionListener
         {
             public void actionPerformed(ActionEvent event )
