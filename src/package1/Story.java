@@ -1,6 +1,6 @@
 package package1;
 
-import package2.Sword;
+import package2.WeaponFactory;
 
 public class Story
 {
@@ -8,23 +8,25 @@ public class Story
 Game game;
 UI ui;
 VisibilityManager vm;
-Player player = new Player();
+Player player;
 
-    public Story(Game g, UI useri, VisibilityManager visib)
+    public Story(Game g, UI useri, VisibilityManager visib, Player player)
     {   
         this.game = g;
         this.ui = useri;
         this.vm = visib;
+        this.player = player;
 
     }
 
     public void defaultSetUp()
     {
-        player.HP = 10;
+        player.HP = 100;
         ui.hpNumLabel.setText("" + player.HP);
 
-        player.currentWeapon = new Sword();
-        ui.weaponNameLabel.setText(player.currentWeapon.name);
+        player.addWeapon(WeaponFactory.createSword());
+        player.equipWeapon("Sword");
+        ui.weaponNameLabel.setText(player.currentWeapon.getName());
     }
 
 
