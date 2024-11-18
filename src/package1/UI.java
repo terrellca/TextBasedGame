@@ -5,13 +5,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import package1.Game.ChoiceHandler;
+import package2.Weapon;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.List;
 
 
 /*
@@ -20,10 +25,12 @@ import java.awt.GridLayout;
 public class UI
 {
     JFrame window;
-    JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonpanel, playerPanel;
+    JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonpanel, playerPanel, inventoryPanel;
     JLabel titleNameLabel,hpTagLabel,hpNumLabel,weaponLabel,weaponNameLabel;
     JButton startButton, choice1, choice2, choice3, choice4;
-    JTextArea mainTextArea;
+    JTextArea mainTextArea, inventoryTextArea;
+    JScrollPane inventoryScrollPane;
+
 
     Font titleFont = new Font("Bell MT", Font.PLAIN, 90);
     Font normalFont = new Font("Times New Roman", Font.PLAIN, 26);
@@ -34,7 +41,7 @@ public class UI
         window.setSize(800, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.black);
-        window.setLayout(null);
+        window.setLayout(new BorderLayout());
        
 
         // Title
@@ -85,6 +92,12 @@ public class UI
         mainTextPanel.add(mainTextArea);
 
 
+        
+
+
+
+
+
         //Button area.
 
         choiceButtonpanel = new JPanel();
@@ -104,7 +117,7 @@ public class UI
 
         choiceButtonpanel.add(choice1);
 
-        choice2 = new JButton("choice1");
+        choice2 = new JButton("choice2");
         choice2.setBackground(Color.white);
         choice2.setForeground(Color.black);
         choice2.setFont(normalFont);
@@ -115,7 +128,7 @@ public class UI
 
         choiceButtonpanel.add(choice2);
 
-        choice3 = new JButton("choice1");
+        choice3 = new JButton("choice3");
         choice3.setBackground(Color.white);
         choice3.setForeground(Color.black);
         choice3.setFont(normalFont);
@@ -126,16 +139,19 @@ public class UI
 
         choiceButtonpanel.add(choice3);
 
-        choice4 = new JButton("choice1");
+        choice4 = new JButton("Inventory");
         choice4.setBackground(Color.white);
         choice4.setForeground(Color.black);
         choice4.setFont(normalFont);
         choice4.setFocusPainted(false);
 
         choice4.addActionListener(cHandler);
-        choice4.setActionCommand("c4");
+        choice4.setActionCommand("inventory");
 
-        choiceButtonpanel.add(choice4);
+        choiceButtonpanel.add(choice4); //inventory button
+
+
+       
 
 
         playerPanel = new JPanel();
@@ -154,7 +170,7 @@ public class UI
         hpNumLabel.setFont(normalFont);
         playerPanel.add(hpNumLabel);
         weaponLabel = new JLabel("Weapon:");
-        weaponLabel .setForeground(Color.white);
+        weaponLabel.setForeground(Color.white);
         weaponLabel.setFont(normalFont);
         playerPanel.add(weaponLabel);
         weaponNameLabel = new JLabel();
@@ -163,9 +179,44 @@ public class UI
         playerPanel.add(weaponNameLabel);
 
 
+        inventoryTextArea = new JTextArea();
+        inventoryTextArea.setBackground(Color.black);
+        inventoryTextArea.setForeground(Color.white);
+        inventoryTextArea.setFont(normalFont);
+        inventoryTextArea.setEditable(false);
 
+        inventoryTextArea.setText("Your Inventory:\n\nInitial content...");
+        
+        inventoryScrollPane = new JScrollPane(inventoryTextArea);
+        inventoryScrollPane.setPreferredSize(new Dimension(200,400));
+        inventoryScrollPane.setVisible(false);
+       
+        
+        inventoryPanel = new JPanel();
+        inventoryPanel.setLayout(new BorderLayout());  // Use a layout manager
+        inventoryPanel.setBackground(Color.black);
+        inventoryPanel.add(inventoryScrollPane);  // Add scroll pane to the panel
+
+        window.add(inventoryPanel);
+        
 
         window.setVisible(true);
 
+    }
+
+
+
+
+     public void showInventory(List<Weapon> inventory) 
+     {
+        inventoryTextArea.setText("Your Inventory:\n\n");
+        if (inventory.isEmpty()) {
+            inventoryTextArea.append("Inventory is empty! Go get something.");
+        } else {
+            for (Weapon weapon : inventory) {
+                inventoryTextArea.append(weapon.getName() + " - Damage: " + weapon.getDmg() + " Weight: " + weapon.getWeight() + "\n");
+            }
+        }
+        
     }
 }

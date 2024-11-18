@@ -21,7 +21,7 @@ public class Player
     public void addWeapon(Weapon weapon)
     {
         inventory.add(weapon);
-        System.out.println(weapon.getName() + "added to inventory");
+        System.out.println(weapon.getName() + " added to inventory");
     }
 
 
@@ -33,9 +33,14 @@ public class Player
             {
                 currentWeapon = weapon;
                 System.out.println(weaponName + " is now equiped");
+                break;
+            }
+            else
+            {
+                System.out.println("Weapon is not in inventory");
             }
         }
-        System.out.println("Weapon is not in inventory");
+       
     }
 
 
