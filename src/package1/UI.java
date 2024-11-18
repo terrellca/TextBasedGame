@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 
 import package1.Game.ChoiceHandler;
 import package2.Weapon;
@@ -68,8 +69,8 @@ public class UI
 
         startButtonPanel.add(startButton);
 
-        window.add(titleNamePanel);
-        window.add(startButtonPanel);
+        window.add(titleNamePanel, BorderLayout.NORTH);
+        window.add(startButtonPanel, BorderLayout.CENTER);
 
 
 
@@ -77,7 +78,7 @@ public class UI
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(100,100,600,250);
         mainTextPanel.setBackground(Color.black);
-        window.add(mainTextPanel);
+        window.add(mainTextPanel, BorderLayout.CENTER);
 
 
 
@@ -89,7 +90,7 @@ public class UI
         mainTextArea.setLineWrap(true);
         mainTextArea.setWrapStyleWord(true);
         mainTextArea.setEditable(false);
-        mainTextPanel.add(mainTextArea);
+        mainTextPanel.add(new JScrollPane(mainTextArea), BorderLayout.CENTER);
 
 
         
@@ -104,7 +105,7 @@ public class UI
         choiceButtonpanel.setBounds(250,350,300,150);
         choiceButtonpanel.setBackground(Color.black);
         choiceButtonpanel.setLayout(new GridLayout(4,1));
-        window.add(choiceButtonpanel);
+        window.add(choiceButtonpanel, BorderLayout.SOUTH);
 
         choice1 = new JButton("choice1");
         choice1.setBackground(Color.white);
@@ -158,7 +159,7 @@ public class UI
         playerPanel.setBounds(100,15,600,50);
         playerPanel.setBackground(Color.black);
         playerPanel.setLayout(new GridLayout(1,4));
-        window.add(playerPanel);
+        window.add(playerPanel, BorderLayout.NORTH);
 
 
         hpTagLabel = new JLabel("HP:");
@@ -178,27 +179,21 @@ public class UI
         weaponNameLabel.setForeground(Color.white);
         playerPanel.add(weaponNameLabel);
 
-
+        inventoryPanel = new JPanel();
+        inventoryPanel.setLayout(new BorderLayout());
+        inventoryPanel.setBackground(Color.black);
         inventoryTextArea = new JTextArea();
         inventoryTextArea.setBackground(Color.black);
         inventoryTextArea.setForeground(Color.white);
         inventoryTextArea.setFont(normalFont);
         inventoryTextArea.setEditable(false);
-
         inventoryTextArea.setText("Your Inventory:\n\nInitial content...");
-        
-        inventoryScrollPane = new JScrollPane(inventoryTextArea);
-        inventoryScrollPane.setPreferredSize(new Dimension(200,400));
-        inventoryScrollPane.setVisible(false);
-       
-        
-        inventoryPanel = new JPanel();
-        inventoryPanel.setLayout(new BorderLayout());  // Use a layout manager
-        inventoryPanel.setBackground(Color.black);
-        inventoryPanel.add(inventoryScrollPane);  // Add scroll pane to the panel
 
-        window.add(inventoryPanel);
-        
+        inventoryScrollPane = new JScrollPane(inventoryTextArea);
+        inventoryScrollPane.setVisible(false);  // Hide initially
+        inventoryPanel.add(inventoryScrollPane, BorderLayout.CENTER);
+
+        window.add(inventoryPanel, BorderLayout.EAST);
 
         window.setVisible(true);
 

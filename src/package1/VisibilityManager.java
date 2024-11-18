@@ -48,6 +48,7 @@ public class VisibilityManager{
         else{
 
             ui.inventoryScrollPane.setVisible(true);
+            ui.showInventory(player.inventory);
             
         }
         
