@@ -11,7 +11,8 @@ public class Game
 
     UI ui = new UI();
     VisibilityManager vm = new VisibilityManager(ui);
-    Story story = new Story(this, ui, vm);
+    Player player = new Player();
+    Story story = new Story(this, ui, vm, player);
 
 
     
