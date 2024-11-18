@@ -25,9 +25,15 @@ Player player;
         ui.hpNumLabel.setText("" + player.HP);
 
         player.addWeapon(WeaponFactory.createSword());
+        player.addWeapon(WeaponFactory.createBow());
         player.equipWeapon("Sword");
         ui.weaponNameLabel.setText(player.currentWeapon.getName());
     }
 
 
+    public void Forest()
+    {
+        ui.mainTextArea.setText("You have spawned in the middle of the Dark Forest.\nAhead of you is small town.\n What is your next move?");
+
+    }
 }

@@ -39,6 +39,8 @@ public class Game
                 {
                     case "start":
                     vm.showGameScreen();
+                    break;
+
                     case "c1":
                     break;
                     
@@ -48,7 +50,8 @@ public class Game
                     case "c3":
                     break;
 
-                    case "c4":
+                    case "inventory":
+                    vm.showInventoryScreen();
                     break;
 
                     default:
@@ -58,6 +61,7 @@ public class Game
                 }
             }
         }
+
 
 
 }
