@@ -209,7 +209,7 @@ public class UI
             inventoryTextArea.append("Inventory is empty! Go get something.");
         } else {
             for (Weapon weapon : inventory) {
-                inventoryTextArea.append(weapon.getName() + " - Damage: " + weapon.getDmg() + " Weight: " + weapon.getWeight() + "\n");
+                inventoryTextArea.append(weapon.getName() + " Damage: " + weapon.getDmg() + " Weight: " + weapon.getWeight() + "\n");
             }
         }
         

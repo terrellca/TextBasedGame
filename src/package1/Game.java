@@ -3,6 +3,9 @@ package package1;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import package2.Weapon;
 
 public class Game
 {
@@ -10,10 +13,11 @@ public class Game
     ChoiceHandler cHandler = new ChoiceHandler();
 
     UI ui = new UI();
-    VisibilityManager vm = new VisibilityManager(ui);
     Player player = new Player();
+    VisibilityManager vm = new VisibilityManager(ui, player);
     Story story = new Story(this, ui, vm, player);
 
+   
 
     
         public static void main(String[] args)

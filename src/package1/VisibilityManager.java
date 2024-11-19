@@ -7,9 +7,10 @@ public class VisibilityManager{
     UI ui;
     Player player;
     
-    public VisibilityManager(UI userInter)
+    public VisibilityManager(UI userInte, Player playerInte)
     {
-        ui = userInter;
+        ui = userInte;
+        player = playerInte;
     }
     public void showTitleScreen()
     {
@@ -39,20 +40,13 @@ public class VisibilityManager{
         ui.playerPanel.setVisible(true);
     }
 
-    public void showInventoryScreen()
-    {
-        if(ui.inventoryScrollPane.isVisible())
-        {
+    public void showInventoryScreen() {
+        if (ui.inventoryScrollPane.isVisible()) {
             ui.inventoryScrollPane.setVisible(false);
-        }
-        else{
-
+        } else {
+            ui.showInventory(player.getInventory()); // Safely fetch inventory
             ui.inventoryScrollPane.setVisible(true);
-            ui.showInventory(player.inventory);
-            
         }
-        
-
     }
 
 }

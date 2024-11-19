@@ -43,6 +43,11 @@ public class Player
        
     }
 
+    public List<Weapon> getInventory() 
+    {
+        return inventory;
+    }
+
 
     public void displayInventory()
     {

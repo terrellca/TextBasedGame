@@ -1,6 +1,6 @@
 package package2;
 
-public class Weapon
+public class Weapon //If I am going to change this to items, I can use the same arraylist and just list off the other items.
 {
     public String name;
     public int damage;    
