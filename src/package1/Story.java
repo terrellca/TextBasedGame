@@ -31,9 +31,63 @@ Player player;
     }
 
 
+    public void selectPosition(String nextPosition)
+    {
+        switch(nextPosition){
+
+            case "Forest":
+            Forest();
+            break;
+
+            case "townGate":
+            townGate();
+            break;
+
+            case "forestWalk":
+            forestWalk();
+            break;
+
+
+            case "Filler":
+            break;
+        }
+    }
+
     public void Forest()
     {
-        ui.mainTextArea.setText("You have spawned in the middle of the Dark Forest.\nAhead of you is small town.\n What is your next move?");
+        ui.mainTextArea.setText("You have spawned in the middle of the Dark Forest.\nAhead of you is small town.\nWhat is your next move?");
+        ui.choice1.setText("Head to the town");
+        ui.choice2.setText("Head deeper into the forest");
+        ui.choice3.setText("Filler");
+
+        game.nextPosition1 = "townGate";
+        game.nextPosition2 = "forestWalk";
+        game.nextPosition3 = "";
 
     }
+
+    public void townGate()
+    {
+        ui.mainTextArea.setText("You walk towards the large gate that leads to the entrance to the town.\nAs you get closer one of the town guards waves at you. \nGuard: Hello there! \nWelcome to the beginner village.");
+        ui.choice1.setText(">");
+        ui.choice2.setText("Testing");
+        ui.choice3.setText("");
+
+        game.nextPosition1 = "Forest";
+        game.nextPosition2 = "";
+        game.nextPosition3 = "";
+    }
+
+    public void forestWalk()
+    {
+        
+    }
+
+    /*
+    * Edit when needed.
+    *public void Filler()
+    {    }
+     */
+
+
 }
