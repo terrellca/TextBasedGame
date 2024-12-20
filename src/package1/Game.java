@@ -17,6 +17,8 @@ public class Game
     VisibilityManager vm = new VisibilityManager(ui, player);
     Story story = new Story(this, ui, vm, player);
 
+
+    String nextPosition1, nextPosition2, nextPosition3;
    
 
     
@@ -43,15 +45,19 @@ public class Game
                 {
                     case "start":
                     vm.showGameScreen();
+                    story.Forest();
                     break;
 
                     case "c1":
+                    story.selectPosition(nextPosition1);
                     break;
                     
                     case "c2":
+                    story.selectPosition(nextPosition2);
                     break;
 
                     case "c3":
+                    story.selectPosition(nextPosition3);
                     break;
 
                     case "inventory":
