@@ -46,11 +46,11 @@ public class Story {
                 forestWalk();
                 break;
 
-            case "fightGoblin":
+            case "fightDarkKnight":
                 fightDarkKnight();
                 break;
 
-            case "lootGoblin":
+            case "lootDarkKnight":
                 lootDarkKnight();
                 break;
 
@@ -58,12 +58,24 @@ public class Story {
                 equipExcalibur();
                 break;
 
+            case "equipWeaponDuringBattle":
+                equipWeaponDuringBattle();
+                break;
+
+            case "RunAway":
+                RunAway();
+                break;
+
             case "gameOver":
                 gameOver();
                 break;
 
             case "restart":
-                restart();
+                game.restartGame();
+                break;
+
+            case "exit":
+                System.exit(0);
                 break;
 
             case "Filler":
@@ -149,54 +161,56 @@ public class Story {
                 .append(" damage.\n\n");
 
         // ui.mainTextArea.setText(
-        //         "You charge towards the towering figure!\n" +
-        //                 "You swin your " + player.currentWeapon.getName() + " at the Dark Knight.\n" +
-        //                 "You deal " + damageDealt + " damage to the Dark Knight.\n" +
-        //                 "The Dark Knight has " + (knightHP - damageDealt) + " HP left.");
+        // "You charge towards the towering figure!\n" +
+        // "You swin your " + player.currentWeapon.getName() + " at the Dark Knight.\n"
+        // +
+        // "You deal " + damageDealt + " damage to the Dark Knight.\n" +
+        // "The Dark Knight has " + (knightHP - damageDealt) + " HP left.");
 
-         if (knightHP > 0) {
-        // Enemy counterattacks
-        int enemyDamage = (int)(Math.random() * 15 + 10); // 10–25 dmg
-        player.HP -= enemyDamage;
+        if (knightHP > 0) {
+            // Enemy counterattacks
+            int enemyDamage = (int) (Math.random() * 15 + 10); // 10–25 dmg
+            player.HP -= enemyDamage;
 
-        fightText.append("The Dark Knight growls in rage and slashes back!\n")
-                 .append("You take ")
-                 .append(enemyDamage)
-                 .append(" damage!\n\n")
-                 .append("Your HP: ")
-                 .append(player.HP)
-                 .append("\nEnemy HP: ")
-                 .append(knightHP);
+            fightText.append("The Dark Knight growls in rage and slashes back!\n")
+                    .append("You take ")
+                    .append(enemyDamage)
+                    .append(" damage!\n\n")
+                    .append("Your HP: ")
+                    .append(player.HP)
+                    .append("\nEnemy HP: ")
+                    .append(knightHP);
 
-        ui.mainTextArea.setText(fightText.toString());
-        ui.hpNumLabel.setText("" + player.HP);
+            ui.mainTextArea.setText(fightText.toString());
+            ui.hpNumLabel.setText("" + player.HP);
 
-        if (player.HP <= 0) {
-            game.nextPosition1 = "gameOver";
-            selectPosition("gameOver");
-            return;
+            if (player.HP <= 0) {
+                game.nextPosition1 = "gameOver";
+                selectPosition("gameOver");
+                return;
 
-            // Fight still going
-            ui.choice1.setText("Swing Again");
-            ui.choice2.setText("Change Weapon");
-            ui.choice3.setText("Retreat");
+                // Fight still going
+                ui.choice1.setText("Swing Again");
+                ui.choice2.setText("Change Weapon");
+                ui.choice3.setText("Retreat");
 
-            game.nextPosition1 = "fightDarkKnight";
-            game.nextPosition2 = "equipWeapon";
-            game.nextPosition3 = "forestWalk";
+                game.nextPosition1 = "fightDarkKnight";
+                game.nextPosition2 = "equipWeapon";
+                game.nextPosition3 = "forestWalk";
 
-        } else {
-           
-            ui.mainTextArea.setText(
-                    "With a final blow, you successfully bring down the Dark Knight!\n" +
-                            "He falls to the ground, defeated and becomes ash.\n\n" +
-                            "You have defeated the Dark Knight!");
-                            darkKnightDefeated = true;
-            
-            ui.choice1.setText("Search the ashen remains");
-            ui.choice2.setText("Turn back towards the town gate");
-            ui.choice3.setText("");
+            } else {
 
+                ui.mainTextArea.setText(
+                        "With a final blow, you successfully bring down the Dark Knight!\n" +
+                                "He falls to the ground, defeated and becomes ash.\n\n" +
+                                "You have defeated the Dark Knight!");
+                darkKnightDefeated = true;
+
+                ui.choice1.setText("Search the ashen remains");
+                ui.choice2.setText("Turn back towards the town gate");
+                ui.choice3.setText("");
+
+            }
         }
 
     }
@@ -207,7 +221,28 @@ public class Story {
     public void equipExcalibur() {
     }
 
+    private void RunAway() {
+        ui.mainTextArea.setText(
+                "You decide to turn tail and run away from the impending doom.\n" +
+                        "As you sprint back towards the safety of the forest edge, \n" +
+                        "you note that you cannot hear the Dark Knights foot steps behind you.\n\n" +
+                        "Perhaps he is not inclined to chase a fleeing opponent. \n\n" +
+                        "You manage to escape back to the forest entrance, your heart racing.\n");
+
+        ui.choice1.setText("Head to the town");
+        ui.choice2.setText("Rest for a while");
+
+        game.nextPosition1 = "townGate";
+        game.nextPosition2 = "Forest";
+    }
+
     public void gameOver() {
+        ui.mainTextArea.setText("You have fallen in battle...\n\nGAME OVER");
+        ui.choice1.setText("Restart");
+        ui.choice2.setText("Exit");
+
+        game.nextPosition1 = "restart";
+        game.nextPosition2 = "exit";
     }
 
     public void restart() {
