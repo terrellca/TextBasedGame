@@ -73,5 +73,13 @@ public class Game
         }
 
 
+        public void restartGame() {
+    player = new Player();
+    story = new Story(this, ui, vm, player);
+    story.defaultSetUp();
+    vm.showTitleScreen();
+}
+
+
 
 }
