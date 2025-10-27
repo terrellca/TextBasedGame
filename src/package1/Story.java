@@ -216,9 +216,36 @@ public class Story {
     }
 
     public void lootDarkKnight() {
+        ui.mainTextArea.setText(
+            "As you search the ashes... you notice \n\n" +
+            "a gleaming sword covered in dust. \n\n" + "**The Famed Excalibur**\n\n" +
+            "You hear a ringing noise in your ears as you pick up the sword.\n\n" +
+            "You feel a surge of power coursing through your veins.\n\n" +
+            "Upon picking up the blade, it reverts into a mere gemstone. \n\n"
+        );
+
+        ui.choice1.setText("Channel the Excaliburs power");
+        ui.choice2.setText("Drop it on the forest floor to remain untainted.");
+        ui.choice3.setText("Filler");
     }
 
     public void equipExcalibur() {
+        player.addWeapon(WeaponFactory.createExcalibur());
+        player.equipWeapon("Excalibur");
+        ui.weaponNameLabel.setText(player.currentWeapon.getName());
+
+
+        ui.mainTextArea.setText(
+            "You have earned the Excalibur after defeating the Dark Knight!\n " +
+            "As you grasp the Excalibur, you take a moment to feel how light it feels withing your hands.\n" +
+            "This legendary sword is said to possess immense power and is fit for a true hero. \n\n"
+        );
+
+        ui.choice1.setText("Head to the town");
+        ui.choice2.setText("");
+        ui.choice3.setText("");
+
+        game.nextPosition1 = "townGate";
     }
 
     private void RunAway() {
