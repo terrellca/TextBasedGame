@@ -28,6 +28,7 @@ public class Story {
         player.addWeapon(WeaponFactory.createSword());
         player.addWeapon(WeaponFactory.createBow());
         player.equipWeapon("Sword");
+        ui.showInventory(player.getInventory());
         ui.weaponNameLabel.setText(player.currentWeapon.getName());
     }
 
@@ -46,6 +47,18 @@ public class Story {
                 forestWalk();
                 break;
 
+            case "relax":
+                // relax();
+                break;  
+
+            case "RunAway":
+                RunAway();
+                break;
+
+            case "enterTown":
+                enterTown();
+                break;
+
             case "fightDarkKnight":
                 fightDarkKnight();
                 break;
@@ -62,12 +75,25 @@ public class Story {
                 equipWeaponDuringBattle();
                 break;
 
-            case "RunAway":
-                RunAway();
+            case "equipSwordThenFight":
+                player.equipWeapon("Sword");
+                ui.weaponNameLabel.setText(player.currentWeapon.getName());
+                ui.showInventory(player.getInventory());
+                fightDarkKnight();
                 break;
 
-            case "enterTown":
-                enterTown();
+            case "equipBowThenFight":
+                player.equipWeapon("Bow");
+                ui.weaponNameLabel.setText(player.currentWeapon.getName());
+                ui.showInventory(player.getInventory());
+                fightDarkKnight();
+                break;
+
+            case "equipDaggerThenFight":
+                player.equipWeapon("Dagger");
+                ui.weaponNameLabel.setText(player.currentWeapon.getName());
+                ui.showInventory(player.getInventory());
+                fightDarkKnight();
                 break;
 
             case "gameOver":
@@ -184,8 +210,8 @@ public class Story {
         // "The Dark Knight has " + (knightHP - damageDealt) + " HP left.");
 
         if (knightHP > 0) {
-            // Enemy counterattacks
-            int enemyDamage = (int) (Math.random() * 15 + 10); // 10–25 dmg
+            // Enemy counter
+            int enemyDamage = (int) (Math.random() * 15 + 10);
             player.HP -= enemyDamage;
 
             fightText.append("The Dark Knight growls in rage and slashes back!\n")
@@ -295,20 +321,21 @@ public class Story {
         darkKnightDefeated = false;
         knightHP = 50;
         game.restartGame();
+        defaultSetUp();
 
     }
 
     public void equipWeaponDuringBattle() {
         ui.mainTextArea.setText(
-                "You quickly rummage through your bag...\n" +
-                        "Which weapon do you want to equip?");
+                "You look through your bag...\n" +
+                        "Which weapon would you like to equip?");
 
         ui.choice1.setText("Sword");
         ui.choice2.setText("Bow");
-        ui.choice3.setText("Axe");
+        ui.choice3.setText("Dagger");
 
         game.nextPosition1 = "equipSwordThenFight";
         game.nextPosition2 = "equipBowThenFight";
-        game.nextPosition3 = "equipAxeThenFight";
+        game.nextPosition3 = "equipDaggerThenFight";
     }
 }

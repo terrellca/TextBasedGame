@@ -38,6 +38,7 @@ public class VisibilityManager{
         ui.mainTextPanel.setVisible(true);
         ui.choiceButtonpanel.setVisible(true);
         ui.playerPanel.setVisible(true);
+        ui.inventoryScrollPane.setVisible(false);
     }
 
     public void showInventoryScreen() {
@@ -47,6 +48,10 @@ public class VisibilityManager{
             ui.showInventory(player.getInventory()); // Safely fetch inventory
             ui.inventoryScrollPane.setVisible(true);
         }
+    }
+
+    public void hideInventoryScreen() {
+        ui.inventoryScrollPane.setVisible(false);
     }
 
 }

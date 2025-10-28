@@ -18,10 +18,6 @@ public class Game {
 
     String nextPosition1, nextPosition2, nextPosition3;
 
-    public static void main(String[] args) {
-        new Game();
-    }
-
     public Game() {
         ui.createUI(cHandler); // Calls method to create UI
         story.defaultSetUp();
@@ -51,23 +47,26 @@ public class Game {
                     break;
 
                 case "inventory":
-                    vm.showInventoryScreen();
+                    if (ui.inventoryScrollPane.isVisible()) {
+                        ui.inventoryScrollPane.setVisible(false);
+                    } else {
+                        ui.showInventory(player.getInventory()); // inventory check
+                        ui.inventoryScrollPane.setVisible(true);
+                    }
+                    // vm.showInventoryScreen();
                     break;
-                
-                case "equpWeapon":
+
+                case "equipWeapon":
                     story.equipWeaponDuringBattle();
                     break;
-                
+
                 case "equipSword":
-                    player.equipWeapon("Sword");
-                    ui.weaponNameLabel.setText("Sword");
+                    ui.showInventory(player.getInventory());
+                    if (player.currentWeapon != null) {
+                        ui.weaponNameLabel.setText(player.currentWeapon.getName());
+                    }
                     story.fightDarkKnight();
                     break;
-
-                
-
-
-                
 
                 default:
                     break;
@@ -81,6 +80,17 @@ public class Game {
         story = new Story(this, ui, vm, player);
         story.defaultSetUp();
         vm.showTitleScreen();
+
+        ui.showInventory(player.getInventory());
+        if (player.currentWeapon != null) {
+            ui.weaponNameLabel.setText(player.currentWeapon.getName());
+        } else {
+            ui.weaponNameLabel.setText("None");
+        }
+    }
+
+    public static void main(String[] args) {
+        new Game();
     }
 
 }

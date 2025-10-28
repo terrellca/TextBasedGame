@@ -1,6 +1,8 @@
 package package1;
 
 import package2.Weapon;
+import package2.WeaponFactory;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -27,18 +29,20 @@ public class Player
 
     public void equipWeapon(String weaponName)
     {
+        boolean found = false;
+
         for (Weapon weapon : inventory)
         {
             if(weapon.getName().equals(weaponName))
             {
                 currentWeapon = weapon;
                 System.out.println(weaponName + " is now equiped");
+                found = true;
                 break;
             }
-            else
-            {
-                System.out.println("Weapon is not in inventory");
-            }
+        }
+        if(!found){
+            System.out.println("Weapon is not in inventory");
         }
        
     }
@@ -51,7 +55,7 @@ public class Player
 
     public void displayInventory()
     {
-        System.out.println("Player inventory");
+        System.out.println("\n===Player Inventory ===");
         for (Weapon weapon : inventory)
         {
             System.out.println(weapon.getName() + "Damage: " + weapon.getDmg());

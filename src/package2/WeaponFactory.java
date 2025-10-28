@@ -14,6 +14,11 @@ public class WeaponFactory
         return new Weapon("Bow", 14,10);
     }
 
+    public static Weapon createDagger()
+    {
+        return new Weapon("Dagger", 10, 5);
+    }
+
 
     public static Weapon createExcalibur()
     {
