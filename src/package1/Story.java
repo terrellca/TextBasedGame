@@ -1,5 +1,7 @@
 package package1;
 
+import javax.swing.JOptionPane;
+
 import package2.WeaponFactory;
 
 public class Story {
@@ -9,7 +11,7 @@ public class Story {
     VisibilityManager vm;
     Player player;
 
-    int knightHP = 50;
+    int knightHP = 150;
 
     boolean darkKnightDefeated = false;
 
@@ -43,13 +45,21 @@ public class Story {
                 townGate();
                 break;
 
+            case "townGateTalk":
+                townGateTalk();
+                break;
+
             case "forestWalk":
                 forestWalk();
                 break;
 
+            case "sneakPast":
+                sneakPast();
+                break;
+
             case "relax":
-                // relax();
-                break;  
+                relaxInForest();
+                break;
 
             case "RunAway":
                 RunAway();
@@ -122,7 +132,38 @@ public class Story {
 
         game.nextPosition1 = "townGate";
         game.nextPosition2 = "forestWalk";
-        game.nextPosition3 = "Forest";
+        game.nextPosition3 = "relax";
+
+    }
+
+    private void relaxInForest() {
+
+        player.HP += 10; // permenent health boost
+        if (player.HP > 110) {
+            player.HP = 110; // HP cannot exceed 110.
+
+            JOptionPane.showMessageDialog(null,
+                    "You are already at full health!\nYour HP will not increase further.",
+                    "Health Maxed",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "You feel rested and gain +10 HP!",
+                    "Rest Successful",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        ui.hpNumLabel.setText("" + player.HP);
+
+        ui.mainTextArea.setText("You take a moment to sit down and relax in the serene environment of the forest.\n"
+                + "The calming nature of the forest with sun lightly shining down upon you through the leaves of the towering trees.\n"
+                + "As you close your eyes and take a deep breath, you feel a sense of calm wash over you.\n\n"
+                + "After a while, you feel rejuvenated and ready to continue your adventure."
+                + "Your HP has increased by +10!");
+
+        ui.choice1.setText("Head to the town");
+        ui.choice2.setText("Explore deeper into the forest");
+        ui.choice3.setText("Relax some more (Will not increase HP Further!)");
 
     }
 
@@ -139,7 +180,7 @@ public class Story {
             game.nextPosition3 = "forestWalk";
         } else {
             ui.mainTextArea.setText(
-                    "The Knight sees the Dark Knights redstone in your hand.\n\n" +
+                    "The Guard sees the Dark Knights ember stone in your hand.\n\n" +
                             "Guard: Nice job, you actually did it... You defeated the Dark Knight!\n\n" +
                             "You are now free to enter the town as a hero!");
             ui.choice1.setText("Enter the town");
@@ -150,6 +191,19 @@ public class Story {
             game.nextPosition2 = "restart";
             game.nextPosition3 = "";
         }
+    }
+
+    public void townGateTalk() {
+        ui.mainTextArea.setText(
+                "Guard: The Dark Knight appeared a few weeks ago... No one who enters the forest returns.\n" +
+                        "If you plan to face him, make sure you're prepared.");
+        ui.choice1.setText("Return to the gate");
+        ui.choice2.setText("Head back to the forest");
+        ui.choice3.setText("");
+
+        game.nextPosition1 = "townGate";
+        game.nextPosition2 = "forestWalk";
+        game.nextPosition3 = "";
     }
 
     public void enterTown() {
@@ -172,35 +226,87 @@ public class Story {
                         "What will you do?");
         game.nextPosition1 = "fightDarkKnight";
         game.nextPosition2 = "RunAway";
-        game.nextPosition3 = "To be added later (More choices)";
+        game.nextPosition3 = "sneakPast";
 
         ui.choice1.setText("Fight the Dark Knight");
+        ui.choice2.setText("Retreat back to the forest entrance");
+        ui.choice3.setText("Try to sneak past him");
 
+    }
+
+    public void sneakPast() {
+        ui.mainTextArea.setText(
+                "You try to sneak around the Dark Knight... but he senses your presence.\n" +
+                        "You have no choice but to fight!");
+
+        ui.choice1.setText("Fight!");
+        ui.choice2.setText("Run Away!");
+        ui.choice3.setText("");
+
+        game.nextPosition1 = "fightDarkKnight";
+        game.nextPosition2 = "RunAway";
+        game.nextPosition3 = "";
     }
 
     // Combat and other methods
 
     public void fightDarkKnight() {
-        int damageDealt = player.currentWeapon.damage;
+        int baseDmg = player.currentWeapon.damage;
         String weaponName = player.currentWeapon.getName();
 
         // Weak but is better for ranged.
         if (weaponName.equalsIgnoreCase("Bow")) {
-            damageDealt -= 5;
+            baseDmg -= 14;
         } else if (weaponName.equalsIgnoreCase("Sword")) {
-            // Balanced
-        } else if (weaponName.equalsIgnoreCase("Axe")) {
-            damageDealt += 5; // More powerful
+
+        } else if (weaponName.equalsIgnoreCase("Dagger")) {
+            baseDmg += 10;
+        } else if (weaponName.equalsIgnoreCase("Excalibur")) {
+            baseDmg += 25;
         }
 
-        knightHP -= damageDealt;
+        boolean hit = Math.random() < 0.20;
+
+        boolean crit = Math.random() < 0.15;
+
+        int damageDealt = 0;
+
+        // knightHP -= damageDealt;
         StringBuilder fightText = new StringBuilder();
 
-        fightText.append("You attack the Dark Knight with your ")
-                .append(weaponName)
-                .append("!\nYou deal ")
-                .append(damageDealt)
-                .append(" damage.\n\n");
+        fightText.append("You attack the Dark Knight with your ").append(weaponName).append("!\n");
+
+        if (hit) {
+            damageDealt = baseDmg;
+
+            if (crit) {
+                damageDealt *= 2;
+                fightText.append("Critical hit! You find a weak point!\n");
+            }
+
+            // apply damage
+            knightHP -= damageDealt;
+
+            fightText.append("You deal ").append(damageDealt).append(" damage!\n");
+
+            // specific weapon dmg response
+            if (weaponName.equalsIgnoreCase("Bow")) {
+                fightText.append("Your arrow pierces through the Dark Knight’s armor!\n");
+
+            } else if (weaponName.equalsIgnoreCase("Sword")) {
+                fightText.append("You swing and hit your mark dealing a good amount of damage!\n");
+
+            } else if (weaponName.equalsIgnoreCase("Dagger")) {
+                fightText.append("You move swiftly and use your dagger.\n");
+
+            } else if (weaponName.equalsIgnoreCase("Excalibur")) {
+
+                fightText.append("Excalibur radiates with dark energy, burning through the armor!\n");
+            }
+
+        } else {
+            fightText.append("You have missed! The Dark Knight is not affected by your attack.\n");
+        }
 
         // ui.mainTextArea.setText(
         // "You charge towards the towering figure!\n" +
@@ -223,9 +329,14 @@ public class Story {
                     .append("\nEnemy HP: ")
                     .append(knightHP);
 
+            if (player.HP <= 20) {
+                fightText.append("\n\nYour health is critically low. You may need to retreat or change your weapon.");
+            }
+
             ui.mainTextArea.setText(fightText.toString());
             ui.hpNumLabel.setText("" + player.HP);
 
+            // defeat
             if (player.HP <= 0) {
                 game.nextPosition1 = "gameOver";
                 selectPosition("gameOver");
@@ -238,11 +349,11 @@ public class Story {
             ui.choice3.setText("Retreat");
 
             game.nextPosition1 = "fightDarkKnight";
-            game.nextPosition2 = "equipWeapon";
+            game.nextPosition2 = "equipWeaponDuringBattle";
             game.nextPosition3 = "RunAway";
 
         } else {
-
+            // victory
             ui.mainTextArea.setText(
                     "With a final blow, you successfully bring down the Dark Knight!\n" +
                             "He falls to the ground, defeated and reduces to cinder.\n\n" +
@@ -319,9 +430,8 @@ public class Story {
 
     public void restart() {
         darkKnightDefeated = false;
-        knightHP = 50;
+        knightHP = 150;
         game.restartGame();
-        defaultSetUp();
 
     }
 

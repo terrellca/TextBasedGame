@@ -6,7 +6,7 @@ public class WeaponFactory
 {
     public static Weapon createSword()
     {
-        return new Weapon("Sword", 16, 12.5);
+        return new Weapon("Sword", 30, 12.5);
     }
 
     public static Weapon createBow()
