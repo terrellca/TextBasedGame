@@ -66,6 +66,10 @@ public class Story {
                 RunAway();
                 break;
 
+            case "enterTown":
+                enterTown();
+                break;
+
             case "gameOver":
                 gameOver();
                 break;
@@ -122,6 +126,17 @@ public class Story {
         }
     }
 
+    public void enterTown() {
+        ui.mainTextArea.setText(
+                "You step through the gate victorious, the sun shinning on your face as you are ready to take on any challenge ahead of you.");
+
+        ui.choice1.setText("Restart Adventure");
+        ui.choice2.setText("Exit Game");
+
+        game.nextPosition1 = "restart";
+        game.nextPosition2 = "exit";
+    }
+
     public void forestWalk() {
         ui.mainTextArea.setText(
                 "You move deeper into the forest. The trees are tall and block out most of the sunlight.\n" +
@@ -143,8 +158,9 @@ public class Story {
         int damageDealt = player.currentWeapon.damage;
         String weaponName = player.currentWeapon.getName();
 
+        // Weak but is better for ranged.
         if (weaponName.equalsIgnoreCase("Bow")) {
-            damageDealt -= 5; // Less damage
+            damageDealt -= 5;
         } else if (weaponName.equalsIgnoreCase("Sword")) {
             // Balanced
         } else if (weaponName.equalsIgnoreCase("Axe")) {
@@ -188,45 +204,49 @@ public class Story {
                 game.nextPosition1 = "gameOver";
                 selectPosition("gameOver");
                 return;
-
-                // Fight still going
-                ui.choice1.setText("Swing Again");
-                ui.choice2.setText("Change Weapon");
-                ui.choice3.setText("Retreat");
-
-                game.nextPosition1 = "fightDarkKnight";
-                game.nextPosition2 = "equipWeapon";
-                game.nextPosition3 = "forestWalk";
-
-            } else {
-
-                ui.mainTextArea.setText(
-                        "With a final blow, you successfully bring down the Dark Knight!\n" +
-                                "He falls to the ground, defeated and becomes ash.\n\n" +
-                                "You have defeated the Dark Knight!");
-                darkKnightDefeated = true;
-
-                ui.choice1.setText("Search the ashen remains");
-                ui.choice2.setText("Turn back towards the town gate");
-                ui.choice3.setText("");
-
             }
-        }
 
+            // Fight still going
+            ui.choice1.setText("Attack Again");
+            ui.choice2.setText("Change Weapon");
+            ui.choice3.setText("Retreat");
+
+            game.nextPosition1 = "fightDarkKnight";
+            game.nextPosition2 = "equipWeapon";
+            game.nextPosition3 = "RunAway";
+
+        } else {
+
+            ui.mainTextArea.setText(
+                    "With a final blow, you successfully bring down the Dark Knight!\n" +
+                            "He falls to the ground, defeated and reduces to cinder.\n\n" +
+                            "You have defeated the Dark Knight!");
+            darkKnightDefeated = true;
+
+            ui.choice1.setText("Search the ashen remains");
+            ui.choice2.setText("Turn back towards the town gate");
+            ui.choice3.setText("");
+
+            game.nextPosition1 = "lootDarkKnight";
+            game.nextPosition2 = "townGate";
+        }
     }
 
     public void lootDarkKnight() {
         ui.mainTextArea.setText(
-            "As you search the ashes... you notice \n\n" +
-            "a gleaming sword covered in dust. \n\n" + "**The Famed Excalibur**\n\n" +
-            "You hear a ringing noise in your ears as you pick up the sword.\n\n" +
-            "You feel a surge of power coursing through your veins.\n\n" +
-            "Upon picking up the blade, it reverts into a mere gemstone. \n\n"
-        );
+                "As you search the ashes... you notice \n\n" +
+                        "a gleaming sword covered in dust. \n\n" + "**The Famed Excalibur**\n\n" +
+                        "You hear a ringing noise in your ears as you pick up the sword.\n\n" +
+                        "You feel a surge of power coursing through your veins.\n\n" +
+                        "Upon picking up the blade, it reverts into a mere gemstone. \n\n");
 
         ui.choice1.setText("Channel the Excaliburs power");
         ui.choice2.setText("Drop it on the forest floor to remain untainted.");
-        ui.choice3.setText("Filler");
+        ui.choice3.setText("");
+
+        game.nextPosition1 = "equipExcalibur";
+        game.nextPosition2 = "townGate";
+
     }
 
     public void equipExcalibur() {
@@ -234,12 +254,11 @@ public class Story {
         player.equipWeapon("Excalibur");
         ui.weaponNameLabel.setText(player.currentWeapon.getName());
 
-
         ui.mainTextArea.setText(
-            "You have earned the Excalibur after defeating the Dark Knight!\n " +
-            "As you grasp the Excalibur, you take a moment to feel how light it feels withing your hands.\n" +
-            "This legendary sword is said to possess immense power and is fit for a true hero. \n\n"
-        );
+                "You have earned the Excalibur after defeating the Dark Knight!\n " +
+                        "As you grasp the Excalibur, you take a moment to feel how light it feels withing your hands.\n\n"
+                        +
+                        "This legendary sword is said to possess immense power and is fit for a true hero. \n\n");
 
         ui.choice1.setText("Head to the town");
         ui.choice2.setText("");
@@ -273,6 +292,10 @@ public class Story {
     }
 
     public void restart() {
+        darkKnightDefeated = false;
+        knightHP = 50;
+        game.restartGame();
+
     }
 
     public void equipWeaponDuringBattle() {
